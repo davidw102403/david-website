@@ -9,21 +9,29 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>David's Website</title>
-        <link rel="stylesheet" href="assets/styles.css">
+        <link rel="stylesheet" href="assets/navbarStyles.css">
+        <link rel="stylesheet" href="assets/homeStyles.css">
+        <link rel="stylesheet" href="assets/contactStyles.css">
+        
+        <script src="navbarControl.js" defer></script>
     </head>
 
     <body>
-        <div class="hero">
-            <nav>
-            <h2 class="logo">David Wang</h2>
-                <u1>
-                    <li><a href="/index.html">Home</a></li>
+        <nav class="navbar">
+            <div><a class="brand-title" href="/index.html">David Wang</a></div>
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
+                <ul>
                     <li><a href="/blog.html">Blog</a></li>
                     <li><a href="/projects.html">Projects</a></li>
                     <li><a href="/contact.html">Contact</a></li>
-                </u1>
-            </nav>
-        </div>
+                </ul>
+            </div>
+        </nav>
         <canvas></canvas>
 <script src="/canvasBackgrounds/blogCanvas.js" type="module"></script>
     </body>

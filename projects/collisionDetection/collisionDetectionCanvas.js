@@ -11,11 +11,11 @@ const mouse = {
 };
 
 const colors = [
-  '#348888',
-  '#22BABB',
-  '#9EF8EE',
-  '#FA7F08',
-  '#F24405'
+  '#242331',
+  '#533E2D',
+  '#A27035',
+  '#B88B4A',
+  '#DDCA7D'
 ];
 
 // Functions

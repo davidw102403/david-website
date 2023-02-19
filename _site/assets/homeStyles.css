@@ -1,14 +1,26 @@
 .greeting {
     color: #444444;
-    margin-left: 50px;
     text-align: left;
 }
 
 .introParagraph {
     color: #444444;
     font-size: 20px;
-    margin-left: 50px;
-    margin-right: 50px;
+    font-weight: lighter;
     text-align: left;
     line-height: 28px;
+}
+
+.introduction {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+.blogLink {
+    color: #FF9900;
+}
+
+.projectsLink {
+    color: #FF9900;
 }

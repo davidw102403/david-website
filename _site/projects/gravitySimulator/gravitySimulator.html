@@ -8,7 +8,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>beach2</title>
+        <title>Gravity Simuation</title>
         <link rel="stylesheet" href="/assets/navbarStyles.css">
         <link rel="stylesheet" href="/assets/homeStyles.css">
         <link rel="stylesheet" href="/assets/blogStyles.css">
@@ -36,6 +36,16 @@
                 </ul>
             </div>
         </nav>
-        <h1>beach</h1>
+        <div class="description">
+    <h1 class="title">Bouncy Balls</h1>
+    <p class="author">Developed by dwang</p>
+</div>
+<div class="settings">
+    <input type="range" id="count" min="0" max="1000" step="1" value="250" oninput="changeBallCount()">
+    <p class="countLabel">Ball Count: <span id="number"></span></p>
+</div>
+
+<canvas></canvas>
+<script src="/projects/gravitySimulator/gravitySimulatorCanvas.js"></script>
     </body>
 </html>

@@ -1,5 +1,25 @@
 ---
 layout: default
+title: Blog
 ---
+
+<table>
+    <tr class="header">
+        <th class="articleNameLabel">Article</th>
+        <th class="articleDateLabel">Date</th>
+    </tr>
+    {% for post in site.posts %}
+    <tr>
+        <td class="articleName"><a href="{{ post.url }}">{{ post.title }}</a></td>
+        <td class="articleDate">{{post.date | date: "%-d %B %Y"}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+
+
+
+
 <canvas></canvas>
 <script src="/canvasBackgrounds/blogCanvas.js" type="module"></script>

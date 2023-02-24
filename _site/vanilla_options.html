@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Plain Vanilla Options</title>
+        <link rel="icon" type="image/png" href="img/favicon.png">
+        <link rel="stylesheet" href="/assets/navbarStyles.css">
+        <link rel="stylesheet" href="/assets/homeStyles.css">
+        <link rel="stylesheet" href="/assets/blogStyles.css">
+        <link rel="stylesheet" href="/assets/projectStyles.css">
+        <link rel="stylesheet" href="/assets/postStyles.css">
+
+        <script src="/navbarControl.js" defer></script>
+
+        <link rel="stylesheet" href="/projects/circularMotion/circularMotionStyles.css">
+        <link rel="stylesheet" href="/projects/gravitySimulator/gravitySimulatorStyles.css">
+        <link rel="stylesheet" href="/projects/collisionDetection/collisionDetectionStyles.css">
+        <link rel="stylesheet" href="/projects/lightTrails/lightTrailsStyles.css">
+        <link rel="stylesheet" href="/projects/sinWaves/sinWavesStyles.css">
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <div><a class="brand-title" href="/index.html">David Wang</a></div>
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
+                <ul>
+                    <li><a href="/blog.html">Blog</a></li>
+                    <li><a href="/projects.html">Projects</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <script type="text/javascript" async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+</script>
+
+<div class="container">
+
+  <div class="postTitle"> Plain Vanilla Options </div>
+  <div class="desc">Understanding options and how they work</div>
+  <div class="postDate"> Posted by David Wang on Febuary 20, 2023 </div>
+
+  <h2 id="introduction">Introduction</h2>
+
+  <p>In this post, we will be covering what a vanilla option is, the types of options, features of options, calculating the payoff of options, and some examples.</p>
+
+  <h2 id="what-is-a-option">What is a Option</h2>
+
+  <p>An option is a contract between two parties, that gives the holder the right, but not obligation, to buy/sell an <a href="https://www.investopedia.com/terms/u/underlying-asset.asp">underlying asset</a> at a predetermined price within a certain timeframe.</p>
+
+  <p>A plain vanilla option is a type of option that has no special features or special terms.</p>
+
+  <h3 id="call-vs-put-options">Call vs Put Options</h3>
+
+  <p>There are two types of vanilla options: call options and put options.</p>
+
+  <p>The holder(or buyer) of a <span style="color:blue"><strong>call</strong></span> option has the right, but not obligation, to <span style="color:blue"><strong>buy</strong></span> from the seller one unit of the asset for a predetermined pirce <strong><em>K</em></strong>, called the <strong>strike</strong>. For this right, the buyer pays <strong><em>C(t)</em></strong> at time <strong><em>t &lt; T</em></strong> to the seller of the call.</p>
+
+  <p>The holder of a <span style="color:red"><strong>put</strong></span> option has the right, but not obligation, to <span style="color:red"><strong>sell</strong></span> from the seller one unit of the asset for a predetermined pirce <strong><em>K</em></strong>, called the <strong>strike</strong>. For this right, the buyer pays <strong><em>P(t)</em></strong> at time <strong><em>t &lt; T</em></strong> to the seller of the put.</p>
+
+  <p>Both calls and puts have a predetermined expiration date <strong><em>T</em></strong> in the future, called the <strong>maturity</strong>, which puts a limit on the time the holder has to exercise the option.</p>
+
+  <h3 id="european-vs-american-option">European vs American Option</h3>
+
+  <ul>
+    <li>
+      <p>European Option: the buyer can only exercise the right to buy/sell the underlying asset at maturity or time <strong><em>T</em></strong>.</p>
+    </li>
+    <li>
+      <p>American Option: the buyer can exercise the right to buy/sell the underying asset at any time before maturity or time <strong><em>t &lt; T</em></strong>.</p>
+    </li>
+  </ul>
+
+  <h2 id="in-out-and-at-the-money">In, Out, and At the money</h2>
+
+  <p>Let <strong><em>S(t)</em></strong> be the price of an underlying asset at time <strong><em>t</em></strong> and <strong><em>K</em></strong> be the predetermined price:</p>
+
+  <p>A <span style="color:blue"><strong>call</strong></span> option is:</p>
+  <ul>
+    <li>in the money (ITM) if <strong><em>S(t) &gt; K</em></strong></li>
+    <li>out the money (OTM) if <strong><em>S(t) &lt; K</em></strong></li>
+    <li>at the money (ATM) if <strong><em>S(t) = K</em></strong></li>
+  </ul>
+
+  <p>Similarly, a <span style="color:blue"><strong>call</strong></span> option is said to <em>expire</em> ITM, OTM, or ATM at time <strong><em>T</em></strong> if <strong><em>S(T) &gt; K</em></strong>, <strong><em>S(T) &lt; K</em></strong>, or <strong><em>S(T) = K</em></strong> respectively.</p>
+
+  <p>A <span style="color:red"><strong>put</strong></span> option is:</p>
+  <ul>
+    <li>in the money (ITM) if <strong><em>S(t) &lt; K</em></strong></li>
+    <li>out the money (OTM) if <strong><em>S(t) &gt; K</em></strong></li>
+    <li>at the money (ATM) if <strong><em>S(t) = K</em></strong></li>
+  </ul>
+
+  <p>Similarly, a <span style="color:red"><strong>put</strong></span> option is said to <em>expire</em> ITM, OTM, or ATM at time <strong><em>T</em></strong> if <strong><em>S(T) &lt; K</em></strong>, <strong><em>S(T) &gt; K</em></strong>, or <strong><em>S(T) = K</em></strong> respectively.</p>
+
+  <h3 id="calculating-payoff-of-a-vanilla-option">Calculating Payoff of a Vanilla Option</h3>
+
+  <p>The payoff of a call option at maturity is:</p>
+
+\[C(T) = max(S(T) - K, 0) =
+\begin{cases}
+S(T) - K &amp; \text{if } S(T) &gt; K \\
+0 &amp; \text{if } S(T) \le K \\
+\end{cases}\]
+
+  <p>The payoff of a put option at maturity is:</p>
+
+\[C(T) = max(S(T) - K, 0) =
+\begin{cases}
+0 &amp; \text{if } S(T) \ge K \\
+S(T) - K &amp; \text{if } S(T) &lt; K \\
+\end{cases}\]
+
+  <h2 id="example">Example</h2>
+
+</div>
+
+
+    </body>
+</html>

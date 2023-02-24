@@ -10,7 +10,7 @@ title: Blog
     </tr>
     {% for post in site.posts %}
     <tr>
-        <td class="articleName"><a href="{{ post.url }}">{{ post.title }}</a></td>
+        <td><a class="articleName" href="{{ post.url }}">{{ post.title }}</a></td>
         <td class="articleDate">{{post.date | date: "%-d %B %Y"}}</td>
     </tr>
     {% endfor %}

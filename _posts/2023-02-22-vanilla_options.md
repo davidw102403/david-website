@@ -21,7 +21,7 @@ subtitle: Understanding how plain vanilla options work
 
 In this post, we will be covering what a vanilla option is, the types of options, features of options, calculating the payoff of options, and some examples. 
 
-## What is a Option
+## What is an Option
 
 An option is a contract between two parties, that gives the holder the right, but not obligation, to buy/sell an [underlying asset](https://www.investopedia.com/terms/u/underlying-asset.asp) at a predetermined price within a certain timeframe. 
 

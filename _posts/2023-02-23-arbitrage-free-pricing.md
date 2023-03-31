@@ -70,7 +70,7 @@ $$
 
 ### Conclusion
 
-Arbitrage-free pricing is used to derive a fair price for assets while eliminating the possibility of arbitrage. However, in practice, the assumptions of the law of one price and efficient markets may not hold true, leading to discrepancies in the fair price and the opportunity for arbitrage. In the next article, I will discuss ways in which arbitrage opportunities can be identified and how they can be executed. 
+Arbitrage-free pricing is used to derive a fair price for assets while eliminating the possibility of arbitrage. However, in practice, the assumptions of the law of one price and efficient markets may not hold true, leading to discrepancies in the fair price and the opportunity for arbitrage. In the next article, I will discuss ways in which arbitrage opportunities can be identified and how they can be executed.  
 
 </div>
 

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Linear Regression from Scratch [CS]</title>
+        <link rel="icon" type="image/png" href="img/favicon.png">
+        <link rel="stylesheet" href="/assets/navbarStyles.css">
+        <link rel="stylesheet" href="/assets/homeStyles.css">
+        <link rel="stylesheet" href="/assets/blogStyles.css">
+        <link rel="stylesheet" href="/assets/projectStyles.css">
+        <link rel="stylesheet" href="/assets/postStyles.css">
+
+        <script src="/navbarControl.js" defer></script>
+
+        <link rel="stylesheet" href="/projects/circularMotion/circularMotionStyles.css">
+        <link rel="stylesheet" href="/projects/gravitySimulator/gravitySimulatorStyles.css">
+        <link rel="stylesheet" href="/projects/collisionDetection/collisionDetectionStyles.css">
+        <link rel="stylesheet" href="/projects/lightTrails/lightTrailsStyles.css">
+        <link rel="stylesheet" href="/projects/sinWaves/sinWavesStyles.css">
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <div><a class="brand-title" href="/index.html">David Wang</a></div>
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
+                <ul>
+                    <li><a href="/blog.html">Blog</a></li>
+                    <li><a href="/projects.html">Projects</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <script type="text/javascript" async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+</script>
+
+<div class="container">
+
+  <div class="postTitle"> Linear Regression From Scratch </div>
+  <div class="desc"> Creating a Linear Regression Machine Learning Model from Scratch in Python </div>
+  <div class="postDate"> Posted by David Wang on March 31, 2023 </div>
+
+  <h2 id="introduction">Introduction</h2>
+
+  <p>Linear Regresion is a machine learning model that aims to draw a best-fitted straight line through a set of data points. The goal is to use this line to describe the relationship between the input variables (independent variables) and the output variable (dependent variable).</p>
+
+  <p>While machine learning libraries like scikit-learn can find the optimal regression line (as i have used <a href="https://github.com/davidw102403/linear_regression_scikit">here</a>), it won’t provide understanding of the underlying mathematics of the model. Implementing the model from scratch in python will allow us to gain a deeper understanding of how the algorithm works.</p>
+
+  <h2 id="the-math">The Math</h2>
+
+  <p>The basic framework of linear regression follows a linear function with structure:</p>
+
+\[y = m \cdot x + b\]
+
+  <p>The gradient, denoted by <strong><em>m</em></strong>, and the intercept, denoted by <strong><em>b</em></strong>, are the two unknown parameters that we need to determine in linear regression. To solve for these parameters, we can use a loss function and the gradient descent algorithm.</p>
+
+  <h3 id="loss-function---mean-squared-error">Loss Function - Mean Squared Error</h3>
+
+  <p>To find the values of <strong><em>m</em></strong> and <strong><em>b</em></strong>, we need to know how far each data point is from the regression line. This error can be calculated with a loss function. In this case, the mean squared error loss function can be used to calculate the distance between the regression line and the data point.</p>
+
+  <p><img src="../images/error.png" alt="Alt text" /></p>
+
+  <p>Using the mean squared error loss function, we take the distance between the data points and the regression line, square it, add it up for all data points, and then divide by the number of data points. In other words, we are taking the mean of the sum of the squared errors:</p>
+
+\[E = \frac{1}{n} \cdot \sum_{x=1}^{n} (y_i - \bar{y}_i)^2\]
+
+  <p>substituting in the equation of the regression line, we get:</p>
+
+\[E = \frac{1}{n} \cdot \sum_{i=1}^{n} (y_i - (m \cdot x_i + b))^2\]
+
+  <p>We can now find the regression line of best fit by minimizing this function for error.</p>
+
+  <h3 id="gradient-descent">Gradient Descent</h3>
+
+  <p>Gradient descent works by iteratively adjusting the model parameters in the direction of steepest descent of the error function. At each iteration, the algorithm calculates the gradient of the error function with respect to the model parameters. The algorithm then updates the model parameters by taking a step in the negative gradient direction.</p>
+
+  <p>Think of it like walking down a hill to find the lowest point. You take steps in the direction that leads you downhill, until you reach the bottom. In the same way, gradient descent takes steps in the direction of decreasing error, until it reaches the lowest possible value of the error function.</p>
+
+  <p>The size of the step is determined by the learning rate hyperparameter, which controls how far the algorithm moves in the negative gradient direction at each iteration. If the learning rate is too large, the algorithm may overshoot the minimum of the error function and fail to converge. If the learning rate is too small, the algorithm may take a long time to converge.</p>
+
+  <p>The learning rate is like the size of the steps you take. If you take steps that are too big, you might overshoot the minimum point and end up climbing up the hill again. If you take steps that are too small, it might take a long time to get to the bottom of the hill. So, the learning rate has to be chosen carefully to balance between speed and accuracy.</p>
+
+  <p>Taking the partial derivative of <strong><em>m</em></strong> and <strong><em>b</em></strong> with respect to the error function:</p>
+
+\[\frac{\partial E}{\partial m} = -\frac{2}{n} \sum_{i=1}^{n} x_i \cdot (y - (m \cdot x_i + b))\]
+
+\[\frac{\partial E}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y - (m \cdot x_i + b))\]
+
+  <p>Scaling the gradient by learning rate <strong><em>L</em></strong> tells us how much we need to change the parameters. Since the gradient gives the direction of steepest increase, the negative gradient gives the direction of steepest decrease, which is what we want to minimize the error function. Applying the changes at each interation:</p>
+
+\[m = m - L \cdot \frac{\partial E}{\partial m}\]
+
+\[b = b - L \cdot \frac{\partial E}{\partial b}\]
+
+  <p>And thats it. We have successfully defined an algorithm for linear regression. Now all that’s left is to implement it in code.</p>
+
+  <h2 id="implementing-linear-regression-in-python">Implementing Linear Regression In Python</h2>
+
+</div>
+
+    </body>
+</html>

@@ -9,7 +9,7 @@ title: Blog
         <th class="articleDateLabel">Date</th>
     </tr>
     {% for post in site.posts %}
-    <tr>
+    <tr class="trheight">
         <td><a class="articleName" href="{{ post.url }}">{{ post.title }}</a></td>
         <td class="articleDate">{{post.date | date: "%-d %B %Y"}}</td>
     </tr>

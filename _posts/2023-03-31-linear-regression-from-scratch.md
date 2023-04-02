@@ -62,7 +62,7 @@ The size of the step is determined by the learning rate hyperparameter, which co
 
 The learning rate is like the size of the steps you take. If you take steps that are too big, you might overshoot the minimum point and end up climbing up the hill again. If you take steps that are too small, it might take a long time to get to the bottom of the hill. So, the learning rate has to be chosen carefully to balance between speed and accuracy.
 
-Taking the partial derivative of __*m*__ and __*b*__ with respect to the error function: 
+Taking the partial derivative of the error function with respect to __*m*__ and __*b*__: 
 
 $$ 
 \frac{\partial E}{\partial m} = -\frac{2}{n} \sum_{i=1}^{n} x_i \cdot (y - (m \cdot x_i + b))

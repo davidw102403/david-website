@@ -72,7 +72,7 @@ $$
 \frac{\partial E}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y - (m \cdot x_i + b))
 $$
 
-Scaling the gradient by learning rate __*L*__ tells us how much we need to change the parameters. Since the gradient gives the direction of steepest increase, the negative gradient gives the direction of steepest decrease, which is what we want to minimize the error function. Applying the changes at each interation: 
+Scaling the gradient by learning rate __*L*__ tells us how much we need to change the parameters. Since the gradient gives the direction of steepest increase, the negative gradient gives the direction of steepest decrease, which is what we want (to minimize the error function). Applying the changes at each interation: 
 
 $$
 m = m - L \cdot \frac{\partial E}{\partial m}
@@ -82,7 +82,7 @@ $$
 b = b - L \cdot \frac{\partial E}{\partial b}
 $$
 
-And thats it. We have successfully defined an algorithm for linear regression. Now all that's left is to implement it in code. 
+And thats it. We have successfully defined an algorithm to find parameters for __*m*__ and __*b*__, which we can use to find the linear regression line. Now all that's left is to implement it in code. 
 
 ## Implementing Linear Regression In Python
 

@@ -3,6 +3,7 @@ tr:nth-child(2n) {
 }
 
 .blogDesc {
+    font-family: 'Roboto', sans-serif;
     margin-left: auto;
     margin-right: auto;
     width: 60%;
@@ -14,6 +15,7 @@ tr:nth-child(2n) {
 }
 
 table {
+    font-family: 'Roboto', sans-serif;
     table-layout: fixed;
     margin-left: auto;
     margin-right: auto;

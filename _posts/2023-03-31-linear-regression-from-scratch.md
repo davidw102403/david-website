@@ -86,6 +86,85 @@ And thats it. We have successfully defined an algorithm to find parameters for _
 
 ## Implementing Linear Regression In Python
 
+### Loss Function and Gradient Descent 
+
+We will be using Pandas to load the data and Matplotlib to visualize the results.
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+```
+
+Next, load in a csv file with data (x-values and y-values).
+
+```python 
+data = pd.read_csv('data.csv')
+```
+
+We can start by defining the loss function.
+
+```python
+def loss_function(m, b, data):
+    total_error = 0
+    for i in range(len(data)):
+        x = data.iloc[i, 0]
+        y = data.iloc[i, 1]
+        total_error += (y - (m * x + b)) ** 2
+    return total_error / float(len(data))
+  ```
+
+The function takes in the parameters *m*, *b*, and the *data* points. It then loops through the number of rows/the number of data points. Using the *iloc* function, we extract each x and y coordinate from each row of the data (each data point). Then we apply the mean squared error function for each itteration. Finally, we return mean of the total error. 
+
+The next step is to define the gradient descent function.
+
+```python
+def gradient_descent(m_now, b_now, data, L):
+  m_gradient = 0
+  b_gradient = 0
+  n = float(len(data))
+  for i in range(len(data)):
+    x = data.iloc[i, 0]
+    y = data.iloc[i, 1]
+    m_gradient += -(2/n) * x * (y - (m_now * x + b_now))
+    b_gradient += -(2/n) * (y - (m_now * x + b_now))
+  m = m_now - L * m_gradient
+  b = b_now - L * b_gradient
+  return [m, b]
+```
+
+The function takes in parameters *m_now*, *b_now*, *data*, and *L*, representing the current m value, current b value, data points, and step size. It then loops through each data point, calculating and updating the gradient of the error function with respect to m and b. It then updates the final values of m and b that are used in the regression line, returning them in a list. The step size, *L*, determines the factor by which we change *m* and *b*.
+
+### Training the Model
+
+To train the model, start by setting *m* and *b* both to zero, *L = 0.00001* and a variable *epochs = 100*. 
+
+```python
+m = 0
+b = 0
+L = 0.00001
+epochs = 100
+
+for i in range(epochs):
+    m, b = gradient_descent(m, b, data, L)
+
+print(m, b)
+```
+
+*Epochs* defines how many times the gradient_descent function will be applied or how many "steps". Starting from zero, each "step" updates the values of *m* and *b* until the error function is minimized and the line of best fit is acheived. 
+
+the results of *m* and *b*:
+
+```python
+1.4567543102446447 0.027979592525960988
+```
+
+### Plotting the Results
+
+To visualize the linear regression, we will plot both the calculated regression line and the error function using matplotlib. Start off by defining two subplots.
+
+
+
+
 
 
 

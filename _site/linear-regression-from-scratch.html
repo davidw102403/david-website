@@ -15,6 +15,8 @@
         <link rel="stylesheet" href="/assets/blogStyles.css">
         <link rel="stylesheet" href="/assets/projectStyles.css">
         <link rel="stylesheet" href="/assets/postStyles.css">
+        <link rel="stylesheet" href="/assets/contactStyles.css">
+        <link rel="stylesheet" href="/assets/syntax.css"
 
         <script src="/navbarControl.js" defer></script>
 
@@ -93,21 +95,91 @@
 
   <p>The learning rate is like the size of the steps you take. If you take steps that are too big, you might overshoot the minimum point and end up climbing up the hill again. If you take steps that are too small, it might take a long time to get to the bottom of the hill. So, the learning rate has to be chosen carefully to balance between speed and accuracy.</p>
 
-  <p>Taking the partial derivative of <strong><em>m</em></strong> and <strong><em>b</em></strong> with respect to the error function:</p>
+  <p>Taking the partial derivative of the error function with respect to <strong><em>m</em></strong> and <strong><em>b</em></strong>:</p>
 
 \[\frac{\partial E}{\partial m} = -\frac{2}{n} \sum_{i=1}^{n} x_i \cdot (y - (m \cdot x_i + b))\]
 
 \[\frac{\partial E}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y - (m \cdot x_i + b))\]
 
-  <p>Scaling the gradient by learning rate <strong><em>L</em></strong> tells us how much we need to change the parameters. Since the gradient gives the direction of steepest increase, the negative gradient gives the direction of steepest decrease, which is what we want to minimize the error function. Applying the changes at each interation:</p>
+  <p>Scaling the gradient by learning rate <strong><em>L</em></strong> tells us how much we need to change the parameters. Since the gradient gives the direction of steepest increase, the negative gradient gives the direction of steepest decrease, which is what we want (to minimize the error function). Applying the changes at each interation:</p>
 
 \[m = m - L \cdot \frac{\partial E}{\partial m}\]
 
 \[b = b - L \cdot \frac{\partial E}{\partial b}\]
 
-  <p>And thats it. We have successfully defined an algorithm for linear regression. Now all that’s left is to implement it in code.</p>
+  <p>And thats it. We have successfully defined an algorithm to find parameters for <strong><em>m</em></strong> and <strong><em>b</em></strong>, which we can use to find the linear regression line. Now all that’s left is to implement it in code.</p>
 
   <h2 id="implementing-linear-regression-in-python">Implementing Linear Regression In Python</h2>
+
+  <h3 id="loss-function-and-gradient-descent">Loss Function and Gradient Descent</h3>
+
+  <p>We will be using Pandas to load the data and Matplotlib to visualize the results.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+</code></pre></div>  </div>
+
+  <p>Next, load in a csv file with data (x-values and y-values).</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="nf">read_csv</span><span class="p">(</span><span class="s">'data.csv'</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>We can start by defining the loss function.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">loss_function</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">total_error</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">total_error</span> <span class="o">+=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">m</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">total_error</span> <span class="o">/</span> <span class="nf">float</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</code></pre></div>  </div>
+
+  <p>The function takes in the parameters <em>m</em>, <em>b</em>, and the <em>data</em> points. It then loops through the number of rows/the number of data points. Using the <em>iloc</em> function, we extract each x and y coordinate from each row of the data (each data point). Then we apply the mean squared error function for each itteration. Finally, we return mean of the total error.</p>
+
+  <p>The next step is to define the gradient descent function.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">gradient_descent</span><span class="p">(</span><span class="n">m_now</span><span class="p">,</span> <span class="n">b_now</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">L</span><span class="p">):</span>
+  <span class="n">m_gradient</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">b_gradient</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">n</span> <span class="o">=</span> <span class="nf">float</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">m_gradient</span> <span class="o">+=</span> <span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">m_now</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b_now</span><span class="p">))</span>
+    <span class="n">b_gradient</span> <span class="o">+=</span> <span class="o">-</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">m_now</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b_now</span><span class="p">))</span>
+  <span class="n">m</span> <span class="o">=</span> <span class="n">m_now</span> <span class="o">-</span> <span class="n">L</span> <span class="o">*</span> <span class="n">m_gradient</span>
+  <span class="n">b</span> <span class="o">=</span> <span class="n">b_now</span> <span class="o">-</span> <span class="n">L</span> <span class="o">*</span> <span class="n">b_gradient</span>
+  <span class="k">return</span> <span class="p">[</span><span class="n">m</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
+</code></pre></div>  </div>
+
+  <p>The function takes in parameters <em>m_now</em>, <em>b_now</em>, <em>data</em>, and <em>L</em>, representing the current m value, current b value, data points, and step size. It then loops through each data point, calculating and updating the gradient of the error function with respect to m and b. It then updates the final values of m and b that are used in the regression line, returning them in a list. The step size, <em>L</em>, determines the factor by which we change <em>m</em> and <em>b</em>.</p>
+
+  <h3 id="training-the-model">Training the Model</h3>
+
+  <p>To train the model, start by setting <em>m</em> and <em>b</em> both to zero, <em>L = 0.00001</em> and a variable <em>epochs = 100</em>.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">m</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">L</span> <span class="o">=</span> <span class="mf">0.00001</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="nf">gradient_descent</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p><em>Epochs</em> defines how many times the gradient_descent function will be applied or how many “steps”. Starting from zero, each “step” updates the values of <em>m</em> and <em>b</em> until the error function is minimized and the line of best fit is acheived.</p>
+
+  <p>the results of <em>m</em> and <em>b</em>:</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mf">1.4567543102446447</span> <span class="mf">0.027979592525960988</span>
+</code></pre></div>  </div>
+
+  <h3 id="plotting-the-results">Plotting the Results</h3>
+
+  <p>To visualize the linear regression, we will plot both the calculated regression line and the error function using matplotlib. Start off by defining two subplots.</p>
 
 </div>
 

@@ -3,9 +3,11 @@
 .greeting {
     color: #444444;
     text-align: left;
+    font-family: 'Roboto', sans-serif;
 }
 
 .introParagraph {
+    font-family: 'Roboto', sans-serif;
     color: #444444;
     font-size: 20px;
     font-weight: lighter;

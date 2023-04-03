@@ -5,6 +5,7 @@
     font-size: 18px;
     color: #404040;
     line-height: 1.5;
+    font-family: 'Roboto', sans-serif;
 }
 
 .postTitle {
@@ -21,4 +22,8 @@
     font-weight: 300;
     font-style: italic;
     font-size: 15px;
+}
+
+pre {
+    padding: 10px;
 }

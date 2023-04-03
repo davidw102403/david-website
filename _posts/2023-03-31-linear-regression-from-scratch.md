@@ -216,6 +216,8 @@ The final result:
 
 ![Alt text](../images/regression_plot.png)
 
+[code](https://github.com/davidw102403/LinearRegressionFromScratch)
+
 
 
 

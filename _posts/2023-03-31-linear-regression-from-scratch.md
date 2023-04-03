@@ -41,7 +41,7 @@ To find the values of __*m*__ and __*b*__, we need to know how far each data poi
 Using the mean squared error loss function, we take the distance between the data points and the regression line, square it, add it up for all data points, and then divide by the number of data points. In other words, we are taking the mean of the sum of the squared errors: 
 
 $$
-E = \frac{1}{n} \cdot \sum_{x=1}^{n} (y_i - \bar{y}_i)^2
+E = \frac{1}{n} \cdot \sum_{i=1}^{n} (y_i - \bar{y}_i)^2
 $$
 
 substituting in the equation of the regression line, we get:
@@ -158,9 +158,66 @@ the results of *m* and *b*:
 1.4567543102446447 0.027979592525960988
 ```
 
+We can easily use this model to make predictions by defining a simple method:
+
+```python
+def predict(x_input):
+  return m * x_input + b
+```
+
 ### Plotting the Results
 
-To visualize the linear regression, we will plot both the calculated regression line and the error function using matplotlib. Start off by defining two subplots.
+To visualize the linear regression, we will plot both the calculated regression line and the error function using matplotlib. Start by creating two subplots.
+
+```python
+fig = plt.figure()
+ax1 = fig.add_subplot(2, 1, 1)
+ax2 = fig.add_subplot(2, 1, 2)
+ax1.set_title("Linear Regression Model")
+ax2.set_title("Loss Function vs Time")
+```
+
+Then we set the axis limits for the loss function plot. The function runs from 0 to epochs, so we'll set that to be the limits on x. Since the goal is to visualize how the error decreases, we can set the y-limits from 0 to the initial value of the loss function. Then, plot the data points on the first subplot. 
+
+```python
+ax2.set_xlim([0, epochs])
+ax2.set_ylim([0, loss_function(m, b, data)])
+
+ax1.scatter(data.iloc[:, 0], data.iloc[:, 1])
+```
+
+Define a starting line for the regression model and a starting point for the loss function.
+
+```python
+line1, = ax1.plot(range(20, 80), range(20, 80), color='r')
+line2, = ax2.plot(0, 0, color='r')
+```
+
+Apply the gradient descent function for each iteration to calculate the values for m and b and set the y-values of the regression model to reflect the calculated line of best fit. At the same time, apply the loss function to calculate the error for each iteration, appending the values to a list for y values. Similarly, append each i value to a list of x values (reflecting increasing time). Finally, to visualize how error changes over time, set both the x_data and y_data of the loss function plot to these lists of changing values.
+
+```python
+xlist = []
+ylist = []
+
+for i in range(epochs):
+    m, b = gradient_descent(m, b, data, L)
+    line1.set_ydata(m * range(20, 80) + b)
+
+    xlist.append(i)
+    ylist.append(loss_function(m, b, data))
+    line2.set_xdata(xlist)
+    line2.set_ydata(ylist)
+
+plt.tight_layout()
+plt.show()
+```
+
+The final result:
+
+![Alt text](../images/regression_plot.png)
+
+
+
 
 
 

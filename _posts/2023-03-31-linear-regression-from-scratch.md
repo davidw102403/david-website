@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Linear Regression from Scratch [CS]
-subtitle: reating a Linear Regression Machine Learning Model from Scratch in Python
+subtitle: creating a Linear Regression Machine Learning Model from Scratch in Python
 ---
 
 <script type="text/javascript" async src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML'></script>

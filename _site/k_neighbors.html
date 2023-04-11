@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>K-Nearest Neighbors from Scratch [CS]</title>
+        <link rel="icon" type="image/png" href="img/favicon.png">
+        <link rel="stylesheet" href="/assets/navbarStyles.css">
+        <link rel="stylesheet" href="/assets/homeStyles.css">
+        <link rel="stylesheet" href="/assets/blogStyles.css">
+        <link rel="stylesheet" href="/assets/projectStyles.css">
+        <link rel="stylesheet" href="/assets/postStyles.css">
+        <link rel="stylesheet" href="/assets/contactStyles.css">
+        <link rel="stylesheet" href="/assets/syntax.css">
+
+        <script src="/navbarControl.js" defer></script>
+
+        <link rel="stylesheet" href="/projects/circularMotion/circularMotionStyles.css">
+        <link rel="stylesheet" href="/projects/gravitySimulator/gravitySimulatorStyles.css">
+        <link rel="stylesheet" href="/projects/collisionDetection/collisionDetectionStyles.css">
+        <link rel="stylesheet" href="/projects/lightTrails/lightTrailsStyles.css">
+        <link rel="stylesheet" href="/projects/sinWaves/sinWavesStyles.css">
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <div><a class="brand-title" href="/index.html">David Wang</a></div>
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
+                <ul>
+                    <li><a href="/blog.html">Blog</a></li>
+                    <li><a href="/projects.html">Projects</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <script type="text/javascript" async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+</script>
+
+<div class="container">
+
+  <div class="postTitle"> K-Nearest Neighbors From Scratch </div>
+  <div class="desc"> Creating a K-Nearest Neighbors Classifier Machine Learning Model from Scratch in Python </div>
+  <div class="postDate"> Posted by David Wang on April 10, 2023 </div>
+
+  <h2 id="introduction">Introduction</h2>
+
+  <p>Classification is a supervised machine learning process that categorizes data points into classes. The K-Nearest Neighbors model is a classification model that works by looking at a data point’s <em>k nearest neighbors</em> and seeing which class has more closer points.</p>
+
+  <p><img src="../images/kneighbors.png" alt="Alt text" /></p>
+
+  <p>In the example above, there are two classes: overweight and underweight. They are determined by two parameters: height and weight. A new, unclassified point is passed in. The algorithm proceeds by identifying the <em>k=5</em> nearest neighbors. The new point would be classified as <em>underweight</em>, as there are more neighbors from the underweight class.</p>
+
+  <h2 id="the-math">The Math</h2>
+
+  <p>The k-nearest neighbors algorithm uses the <em>euclidean distance</em> between points, which is given by the following formula:</p>
+
+\[d(p, q) = \sqrt{\sum_{i=1}^n (q_i-p_i)^2}\]
+
+  <p>This formula calcualtes the distance between two points, <em>p and q</em>, in <em>n</em> dimensional space by taking the square root of the sum of the squared distances between the coordinates of two points. In 2D, the formula is:</p>
+
+\[d(p, q) = \sqrt{(q_1-p_1)^2 + (q_2-p_2)^2}\]
+
+  <p>In 3D:</p>
+
+\[d(p, q) = \sqrt{(q_1-p_1)^2 + (q_2-p_2)^2 + (q_3-p_3)^2}\]
+
+  <p>As you can see, for each increase in dimension, we sum up another \((q_i-p_i)^2\) term, which is why the summation is there in the generalized eulidean distance formula.</p>
+
+  <h2 id="implementing-in-python">Implementing in Python</h2>
+
+  <p>Import the following libraries.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="n">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="n">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+</code></pre></div>  </div>
+
+  <p>numpy is used for working with arrays, matplotlib for visualizing the results, and Counter for counting the appearances in arrays.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">points</span> <span class="o">=</span> <span class="p">{</span><span class="s">'blue'</span><span class="p">:</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span>
+          <span class="s">'orange'</span><span class="p">:</span> <span class="p">[[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">]]}</span>
+
+<span class="n">new_point</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+</code></pre></div>  </div>
+
+  <p>Next, we create a dictionary with our labaled training data and a new point that we want to classify.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">K_Nearest_Neighbors</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">k</span> <span class="o">=</span> <span class="n">k</span>
+
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">points</span><span class="p">):</span>
+        <span class="n">self</span><span class="p">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+</code></pre></div>  </div>
+
+  <p>We then define a class K_Nearest_Neighbors that has a constructor that k to a default value of 3 if no other value is provided. Then, we create an instance method fit that takes in a set of data points and stores it to the instance variable self.points.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">def</span> <span class="nf">euclidean_distance</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="nf">sqrt</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">sum</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="nf">array</span><span class="p">(</span><span class="n">q</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>We then create an instance method euclidean distance that takes in two points and returns the euclidean distance between them using the formula above.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">self</span><span class="p">,</span> <span class="n">new_point</span><span class="p">):</span>
+        <span class="n">distances</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">points</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">self</span><span class="p">.</span><span class="n">points</span><span class="p">[</span><span class="n">category</span><span class="p">]:</span>
+                <span class="n">distance</span> <span class="o">=</span> <span class="n">self</span><span class="p">.</span>
+                <span class="nf">euclidean_distance</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">new_point</span><span class="p">)</span>
+                <span class="n">distances</span><span class="p">.</span><span class="nf">append</span><span class="p">([</span><span class="n">distance</span><span class="p">,</span> <span class="n">category</span><span class="p">])</span>
+
+        <span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="n">category</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> 
+                    <span class="nf">sorted</span><span class="p">(</span><span class="n">distances</span><span class="p">)[:</span><span class="n">self</span><span class="p">.</span><span class="n">k</span><span class="p">]]</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="nc">Counter</span><span class="p">(</span><span class="n">categories</span><span class="p">).</span><span class="nf">most_common</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">result</span>
+</code></pre></div>  </div>
+
+  <p>Finally, we create a predict instance method that takes in a new point. A new list <em>distances</em> is created to store each calculated distance between the <em>new_point</em> and the data points stored in the <em>self.points</em> instance variable (set by the <em>fit</em> method). We then loop through the data points by category, calling the <em>euclidean_distance</em> method on each data point. The resulting distance between each data point and the <em>new_point</em> is appended to the <em>distances</em> list, as well as the data point’s category. When the loop finishes, <em>distances</em> will be a list of tuples of length 2.</p>
+
+  <p>Next, create a list <em>categories</em> using python’s list comprehension. <em>sorted(distances)</em> sorts the <em>distances</em> list in aescending order, based on the first argument in each sublist. We then loop through the sorted list of distances, extracting the second argument (category) of each sublist using <em>category[1]</em>. The list is then indexed from 0 to k using <em>[:self.k]</em>. The resulting <em>categories</em> list is the k nearest points labeled by category.</p>
+
+  <p>The result of the classification is calculated by applying <em>Counter(categories)</em>, which generates a map with each category mapped to it’s frequency. the <em>most_common(1)</em> method is applied, which returns the most common category as tuple inside a list. <em>[0][0]</em> is used to extract the most common category, which is the result of the classification.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="nc">K_Nearest_Neighbors</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">model</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">new_point</span><span class="p">))</span>
+</code></pre></div>  </div>
+
+  <p>Apply the algorithm by instantiating the class and calling the <em>fit</em> and <em>predict</em> methods.</p>
+
+  <p>The result:</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">blue</span>
+</code></pre></div>  </div>
+
+  <h2 id="visualizing-the-results">Visualizing the results</h2>
+  <p>We can check our result by plotting the points.</p>
+</div>
+
+    </body>
+</html>

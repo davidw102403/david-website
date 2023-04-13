@@ -151,6 +151,50 @@
 
   <h2 id="visualizing-the-results">Visualizing the results</h2>
   <p>We can check our result by plotting the points.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplot</span><span class="p">()</span>
+
+<span class="p">[</span><span class="n">ax</span><span class="p">.</span><span class="nf">scatter</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">'#104DCA'</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span> 
+ <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">[</span><span class="s">'blue'</span><span class="p">]]</span>
+<span class="p">[</span><span class="n">ax</span><span class="p">.</span><span class="nf">scatter</span><span class="p">(</span><span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">'#EF6C35'</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">60</span><span class="p">)</span> 
+ <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">[</span><span class="s">'orange'</span><span class="p">]]</span>
+</code></pre></div>  </div>
+
+  <p>Create an Axis object and use the scatter method to plot the blue and orange data points.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">new_class</span> <span class="o">=</span> <span class="n">clf</span><span class="p">.</span><span class="nf">predict</span><span class="p">(</span><span class="n">new_point</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">new_class</span> <span class="o">==</span> <span class="s">'orange'</span><span class="p">:</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s">'#EF6C35'</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="s">'#104DCA'</span>
+
+<span class="n">ax</span><span class="p">.</span><span class="nf">scatter</span><span class="p">(</span><span class="n">new_point</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">new_point</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> 
+ <span class="n">marker</span><span class="o">=</span><span class="s">'*'</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Classify the <em>new_point</em> using the model and set the color depending on result and plot it.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">ax</span><span class="p">.</span><span class="nf">plot</span><span class="p">([</span><span class="n">new_point</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">new_point</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> 
+ <span class="n">color</span><span class="o">=</span><span class="s">'#104DCA'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> 
+  <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">[</span><span class="s">'blue'</span><span class="p">]]</span>
+
+<span class="p">[</span><span class="n">ax</span><span class="p">.</span><span class="nf">plot</span><span class="p">([</span><span class="n">new_point</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">point</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">new_point</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">point</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> 
+ <span class="n">color</span><span class="o">=</span><span class="s">'#EF6C35'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'--'</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> 
+  <span class="k">for</span> <span class="n">point</span> <span class="ow">in</span> <span class="n">points</span><span class="p">[</span><span class="s">'orange'</span><span class="p">]]</span>
+</code></pre></div>  </div>
+
+  <p>Draw lines between <em>new_point</em> and data points to visualize distance.</p>
+
+  <p>Result:</p>
+
+  <p><img src="../images/knnresult.png" alt="Alt text" /></p>
+
+  <p>Changing new_point to (5,5):</p>
+
+  <p><img src="../images/knnresult2.png" alt="Alt text" /></p>
+
+  <p><a href="https://github.com/davidw102403/k-nearest-neighbors-scratch">code</a></p>
 </div>
 
     </body>

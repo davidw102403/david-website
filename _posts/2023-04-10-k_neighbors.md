@@ -125,3 +125,50 @@ blue
 
 ## Visualizing the results
 We can check our result by plotting the points. 
+
+```python
+ax = plt.subplot()
+
+[ax.scatter(point[0], point[1], color='#104DCA', s=60) 
+ for point in points['blue']]
+[ax.scatter(point[0], point[1], color='#EF6C35', s=60) 
+ for point in points['orange']]
+```
+
+Create an Axis object and use the scatter method to plot the blue and orange data points. 
+
+```python
+new_class = clf.predict(new_point)
+
+if new_class == 'orange':
+    color = '#EF6C35'
+else:
+    color = '#104DCA'
+
+ax.scatter(new_point[0], new_point[1], color=color, 
+ marker='*', s=200, zorder=100)
+```
+
+Classify the *new_point* using the model and set the color depending on result and plot it. 
+
+```python 
+[ax.plot([new_point[0], point[0]], [new_point[1], point[1]], 
+ color='#104DCA', linestyle='--', linewidth=1) 
+  for point in points['blue']]
+
+[ax.plot([new_point[0], point[0]], [new_point[1], point[1]], 
+ color='#EF6C35', linestyle='--', linewidth=1) 
+  for point in points['orange']]
+```
+
+Draw lines between *new_point* and data points to visualize distance. 
+
+Result:
+
+![Alt text](../images/knnresult.png)
+
+Changing new_point to (5,5):
+
+![Alt text](../images/knnresult2.png)
+
+[code](https://github.com/davidw102403/k-nearest-neighbors-scratch)

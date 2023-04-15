@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Support Vector Machines [CS]</title>
+        <link rel="icon" type="image/png" href="img/favicon.png">
+        <link rel="stylesheet" href="/assets/navbarStyles.css">
+        <link rel="stylesheet" href="/assets/homeStyles.css">
+        <link rel="stylesheet" href="/assets/blogStyles.css">
+        <link rel="stylesheet" href="/assets/projectStyles.css">
+        <link rel="stylesheet" href="/assets/postStyles.css">
+        <link rel="stylesheet" href="/assets/contactStyles.css">
+        <link rel="stylesheet" href="/assets/syntax.css">
+
+        <script src="/navbarControl.js" defer></script>
+
+        <link rel="stylesheet" href="/projects/circularMotion/circularMotionStyles.css">
+        <link rel="stylesheet" href="/projects/gravitySimulator/gravitySimulatorStyles.css">
+        <link rel="stylesheet" href="/projects/collisionDetection/collisionDetectionStyles.css">
+        <link rel="stylesheet" href="/projects/lightTrails/lightTrailsStyles.css">
+        <link rel="stylesheet" href="/projects/sinWaves/sinWavesStyles.css">
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <div><a class="brand-title" href="/index.html">David Wang</a></div>
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
+                <ul>
+                    <li><a href="/blog.html">Blog</a></li>
+                    <li><a href="/projects.html">Projects</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <script type="text/javascript" async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+</script>
+
+<div class="container">
+
+  <div class="postTitle"> Support Vector Machines </div>
+  <div class="desc"> Support Vector Machines and how they work </div>
+  <div class="postDate"> Posted by David Wang on April 14, 2023 </div>
+
+  <h2 id="introduction">Introduction</h2>
+  <p>Support vector machines are a powerful supervised machine learning model that classifies new data (much like <a href="https://davidwangdev.com/k_neighbors">KNN</a>). The difference is, instead of calculating the k-closest neighbors, SVM’s use a mathematical function to split the data in some way. And not just some way, but the most optimal way.</p>
+
+  <p><img src="../images/svc1.png" alt="Alt text" /></p>
+
+  <p>The data above are categorized into two different classes and are split by three lines. There are an infinite number of lines that split the data. The SVM algorithm aims to find the line, known as a <strong>decision boundary</strong>, that maximizes the <strong>margin</strong>, which is the distance between the decision boundary to the closest point from each class, called the <strong>support vectors</strong>.</p>
+
+  <p><img src="../images/svm2.png" alt="Alt text" /></p>
+
+  <p>However, data won’t always be easy to split. In some cases, classes may overlap or it may not be clear how to divide the classes.</p>
+
+  <p><img src="../images/svm3.png" alt="Alt text" /></p>
+
+  <p>As seen above, although it is clear that the data lie in two different classes, it isn’t clear where the decision boundary should be.</p>
+
+  <p>The solution is to use a <strong>kernel function</strong> or kernels. A kernel function adds an additional feature, or dimension, to the data. In the example above, a kernel function could attempt to raise the blue points above the red points and drop a hyper-plane between them to act as a decision boundary. the data couldn’t be seperated in the second dimension, so we do it in the third. It is important to note that the kernel function does not add any additional data. It uses feature 1 and feature 2 to generate feature 3.</p>
+
+  <p>SVM’s can also utilize <strong>soft margins</strong> to create more intelligent decision boundaries.</p>
+
+  <p><img src="../images/svm4.png" alt="Alt text" /></p>
+
+  <p>In the example above, the model draws the optimal line to seperate blue and red. However, as humans, it’s obvious that this isn’t the best line. What we can do is define a soft margin of 2 to allow for miss-classifications of up to two points. Soft margins are basically a tolerance that we can use to make our model more accurate in general.</p>
+
+  <p>With a soft margin of 2, the decision boundary would look something like:</p>
+
+  <p><img src="../images/svm5.png" alt="Alt text" /></p>
+
+  <h2 id="implementing-svc-using-sklearn">Implementing SVC using sklearn</h2>
+
+  <p>We will import breast cancer data and train and test a SVM classifier to classify tumors as malignant/benign.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_breast_cancer</span>
+<span class="kn">from</span> <span class="n">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="n">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span> 
+<span class="kn">from</span> <span class="n">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="nf">load_breast_cancer</span><span class="p">()</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">target</span> 
+</code></pre></div>  </div>
+
+  <p>Next, we split the data. 80% for training the model, 20% for testing.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> 
+ <span class="nf">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Create an SVM classifier model with a linear kernel and a soft margin of 5.</p>
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">clf</span> <span class="o">=</span> <span class="nc">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s">'linear'</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Train the model.</p>
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">clf</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Test the model.</p>
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'SVC: </span><span class="si">{</span><span class="n">clf</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Output:</p>
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">SVC</span><span class="p">:</span> <span class="mf">0.9736842105263158</span>
+</code></pre></div>  </div>
+
+  <p>The SVM model can classify new tumors with 92-97% accuracy.</p>
+
+  <p>As a bonus, we can compare SVM and KNN classifiers.
+Create, train, and test KNN model</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">clf2</span> <span class="o">=</span> <span class="nc">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">clf2</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'KNN: </span><span class="si">{</span><span class="n">clf2</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Output:</p>
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">KNN</span><span class="p">:</span> <span class="mf">0.9385964912280702</span>
+</code></pre></div>  </div>
+
+  <p>The results of the two models are generally very close, with the SVM classifier outperforming KNN occasionally.</p>
+
+</div>
+
+    </body>
+</html>

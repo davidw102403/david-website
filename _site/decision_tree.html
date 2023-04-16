@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Decision Tree Classifiers [CS]</title>
+        <link rel="icon" type="image/png" href="img/favicon.png">
+        <link rel="stylesheet" href="/assets/navbarStyles.css">
+        <link rel="stylesheet" href="/assets/homeStyles.css">
+        <link rel="stylesheet" href="/assets/blogStyles.css">
+        <link rel="stylesheet" href="/assets/projectStyles.css">
+        <link rel="stylesheet" href="/assets/postStyles.css">
+        <link rel="stylesheet" href="/assets/contactStyles.css">
+        <link rel="stylesheet" href="/assets/syntax.css">
+
+        <script src="/navbarControl.js" defer></script>
+
+        <link rel="stylesheet" href="/projects/circularMotion/circularMotionStyles.css">
+        <link rel="stylesheet" href="/projects/gravitySimulator/gravitySimulatorStyles.css">
+        <link rel="stylesheet" href="/projects/collisionDetection/collisionDetectionStyles.css">
+        <link rel="stylesheet" href="/projects/lightTrails/lightTrailsStyles.css">
+        <link rel="stylesheet" href="/projects/sinWaves/sinWavesStyles.css">
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <div><a class="brand-title" href="/index.html">David Wang</a></div>
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
+                <ul>
+                    <li><a href="/blog.html">Blog</a></li>
+                    <li><a href="/projects.html">Projects</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <script type="text/javascript" async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+</script>
+
+<div class="container">
+
+  <div class="postTitle"> Decision Tree Classifiers </div>
+  <div class="desc"> The intuition and math behind DTC's </div>
+  <div class="postDate"> Posted by David Wang on April 15, 2023 </div>
+
+  <h2 id="introduction">Introduction</h2>
+  <p>Decision tree classifiers are a supervised machine learning model that recursively splits data until you are left with pure leaf nodes (data of only one class). This post seeks to explore what that means and how the DTC works.</p>
+
+  <h1 id="decision-tree-classification">Decision Tree Classification</h1>
+  <p>Explaining DTC’s is best done through an example. Let’s say you are given a data set with two classes (red and blue) and two features (x1 and x2). The data, however, cannot be seperated into two classes easily.</p>
+
+  <p><img src="../images/dtc1.png" alt="Alt text" /></p>
+
+  <p>Next, we will look at a trained decision tree clasifier for this data set:</p>
+
+  <p><img src="../images/dtc2.png" alt="Alt text" /></p>
+
+  <p>The tree consists of two different types of nodes: decision nodes, and leaf nodes. As you can see, each decision node has a condition. The points that satisfy the condition are moved to the left child node while the points that do not are moved into the right child node. This process continues until the leaf nodes are “pure”, meaning that they only contain points of one class.</p>
+
+  <p>To classify a new point, all that needs to be done is to traverse the tree, following the conditions. For example, to classify the point (3, 7), we first check the root node. 3 is not less than -7 so it goes to the right decision node. We check it’s condition, and it passes, sending it to the left decision node. We check it’s condition, x2 &lt;= 4. It fails, sending it to the right leaf node. Luckily all the points in this leaf node are red, so we can classify the new point as red.</p>
+
+  <p>The conditions of the decision nodes can be visualized on the original plot:</p>
+
+  <p><img src="../images/dtc3.png" alt="Alt text" /></p>
+
+  <p>In real life, however, leaf nodes may not be 100% pure, meaning that they may contain points from other classes. In this case, we take the most common class and assign it as the classification.</p>
+
+  <h1 id="math">Math</h1>
+  <p>At this point, you might be asking: this is just a bunch of if and if-else statements; how is this machine learning? The answer lies in finding the optimal conditions for dividing the data.</p>
+
+  <p><img src="../images/dtc4.png" alt="Alt text" /></p>
+
+  <p>Above shows two different splits. As humans, we can tell that the first split is better, since it produces a leaf node of only reds. But how does the computer know that? The answer lies in information theory. Specifically, the model will choose a split that maximizes the information gain.</p>
+
+  <p>To quantify how much information a certain state contains, we use the equation for entropy:</p>
+
+\[Entropy = \sum -p_i \cdot log_2(p_i)\]
+
+\[p_i = \text {probability of class i}\]
+
+  <p>For example, let’s calculate the entropy of the root state with 10 reds and 10 blues. The probability of each class is 0.5.</p>
+
+\[-0.5log_2(0.5) - 0.5log_2(0.5) = 1\]
+
+  <p>The result is 1, which is the highest entropy. Using this formula, calculate the entropy for the four states:</p>
+
+  <p><img src="../images/dtc5.png" alt="Alt text" /></p>
+
+  <p>To calculate the information gain, we subtract the sum of the weighted entropies of the child nodes from the entropy of the parent node:</p>
+
+\[IG = E(parent) - \sum w_i \cdot E(child_i)\]
+
+\[w_i = \text{ relative size of child node with respect to parent}\]
+
+  <p>Calculating the information gain for the two splits:</p>
+
+\[IG_left = 1 - (\frac{4}{20} \cdot 0 + \frac{16}{20} \cdot .95) = .24\]
+
+\[IG_right = 1 - (\frac{14}{20} \cdot .99 + \frac{6}{20} \cdot .92) = .031\]
+
+  <p>The left split gives more information gain, so we choose it over the right split.</p>
+
+  <p>The model checks every split and chooses the one that maximizes the information gain.</p>
+
+</div>
+
+    </body>
+</html>

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Plain Vanilla Options [finance]
+title: Plain Vanilla Options 
 subtitle: Understanding how plain vanilla options work
 
 ---

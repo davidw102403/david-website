@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Decision Tree Classifiers [CS]
+title: Decision Tree Classifiers 
 subtitle: The intuition and math behind DTC's
 ---
 

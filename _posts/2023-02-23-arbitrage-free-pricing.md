@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Arbitrage-Free Pricing [finance]
+title: Arbitrage-Free Pricing 
 subtitle: Arbitrage Free Pricing and the Law of one Price
 
 ---

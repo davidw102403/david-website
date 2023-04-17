@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Support Vector Machines [CS]
+title: Support Vector Machines 
 subtitle: Support Vector Machines and how they work
 ---
 

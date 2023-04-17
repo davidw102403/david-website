@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Linear Regression from Scratch [CS]
+title: Linear Regression from Scratch 
 subtitle: creating a Linear Regression Machine Learning Model from Scratch in Python
 ---
 

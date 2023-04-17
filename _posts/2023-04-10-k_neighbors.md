@@ -1,6 +1,6 @@
 ---
 layout: default
-title: K-Nearest Neighbors from Scratch [CS]
+title: K-Nearest Neighbors from Scratch 
 subtitle: creating a K-Nearest Neighbors Classifier Machine Learning Model from Scratch in Python
 ---
 

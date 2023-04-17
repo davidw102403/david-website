@@ -1,6 +1,6 @@
 ---
 layout: default
-title: What is Machine Learning? [CS]
+title: What is Machine Learning? 
 subtitle: What Machine Learning is and the Types of Machine Learning
 
 ---

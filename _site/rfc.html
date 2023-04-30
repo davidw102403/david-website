@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Random Forest Classifiers</title>
+        <link rel="icon" type="image/png" href="img/favicon.png">
+        <link rel="stylesheet" href="/assets/navbarStyles.css">
+        <link rel="stylesheet" href="/assets/homeStyles.css">
+        <link rel="stylesheet" href="/assets/blogStyles.css">
+        <link rel="stylesheet" href="/assets/projectStyles.css">
+        <link rel="stylesheet" href="/assets/postStyles.css">
+        <link rel="stylesheet" href="/assets/contactStyles.css">
+        <link rel="stylesheet" href="/assets/syntax.css">
+
+        <script src="/navbarControl.js" defer></script>
+
+        <link rel="stylesheet" href="/projects/circularMotion/circularMotionStyles.css">
+        <link rel="stylesheet" href="/projects/gravitySimulator/gravitySimulatorStyles.css">
+        <link rel="stylesheet" href="/projects/collisionDetection/collisionDetectionStyles.css">
+        <link rel="stylesheet" href="/projects/lightTrails/lightTrailsStyles.css">
+        <link rel="stylesheet" href="/projects/sinWaves/sinWavesStyles.css">
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <div><a class="brand-title" href="/index.html">David Wang</a></div>
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
+                <ul>
+                    <li><a href="/blog.html">Blog</a></li>
+                    <li><a href="/projects.html">Projects</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <script type="text/javascript" async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+</script>
+
+<div class="container">
+
+  <div class="postTitle"> Random Forest Classifiers </div>
+  <div class="desc"> RFC's and how they work </div>
+  <div class="postDate"> Posted by David Wang on April 28, 2023 </div>
+
+  <h2 id="introduction">Introduction</h2>
+
+  <p>Random Forest classifiers are a type of ensemble learning algorithm that combine multiple decision trees to improve the performance and generalization of the model. Each decision tree in the Random Forest is built using a random subset of the features and a random subset of the training data.</p>
+
+  <h2 id="the-problem-with-decision-trees">The Problem with Decision Trees</h2>
+
+  <p>Here’s an example. Imagine we’re given a dataset with 6 instances, 5 features, and a binary classification of 0 or 1.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align: center">id</th>
+        <th style="text-align: center">x<sub>0</sub></th>
+        <th style="text-align: center">x<sub>1</sub></th>
+        <th style="text-align: center">x<sub>2</sub></th>
+        <th style="text-align: center">x<sub>3</sub></th>
+        <th>x<sub>4</sub></th>
+        <th>y</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center">0</td>
+        <td style="text-align: center">4.3</td>
+        <td style="text-align: center">4.9</td>
+        <td style="text-align: center">4.1</td>
+        <td style="text-align: center">4.7</td>
+        <td>5.5</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">1</td>
+        <td style="text-align: center">3.9</td>
+        <td style="text-align: center">6.1</td>
+        <td style="text-align: center">5.9</td>
+        <td style="text-align: center">5.5</td>
+        <td>5.9</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">2</td>
+        <td style="text-align: center">2.7</td>
+        <td style="text-align: center">4.8</td>
+        <td style="text-align: center">4.1</td>
+        <td style="text-align: center">5.0</td>
+        <td>5.6</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">3</td>
+        <td style="text-align: center">6.6</td>
+        <td style="text-align: center">4.4</td>
+        <td style="text-align: center">4.5</td>
+        <td style="text-align: center">3.9</td>
+        <td>5.9</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">4</td>
+        <td style="text-align: center">6.5</td>
+        <td style="text-align: center">2.9</td>
+        <td style="text-align: center">4.7</td>
+        <td style="text-align: center">4.6</td>
+        <td>6.1</td>
+        <td>1</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">5</td>
+        <td style="text-align: center">2.7</td>
+        <td style="text-align: center">6.7</td>
+        <td style="text-align: center">4.2</td>
+        <td style="text-align: center">5.3</td>
+        <td>4.8</td>
+        <td>1</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>The decision tree classifier for this dataset would look like:</p>
+
+  <p><img src="../images/rfc1.png" alt="Alt text" /></p>
+
+  <p>Now, let’s change the training data slightly by altering x<sub>0</sub> and x<sub>1</sub> of id 1 to 6.5 and 4.1 respectively. The new decision tree now looks like this:</p>
+
+  <p><img src="../images/rfc2.png" alt="Alt text" /></p>
+
+  <p>As you can see, a small change in the data results in a completely different outcome. Trees are highly sensitive to training data, which results in high variance and failure to generalize.</p>
+
+  <h2 id="random-forest-classifier">Random Forest Classifier</h2>
+
+  <p>As the name suggests, random forest classifiers uses multiple trees (a forest). The “random” part comes from the way in which the trees are built. We will build 4 new trees (in practice, RFC’s build hundreds of new trees).</p>
+
+  <p>The first step is to generate new datasets from the original data by randomly picking rows with replacement, a process called boostrapping:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align: center">sample<sub>1</sub></th>
+        <th style="text-align: center">sample<sub>2</sub></th>
+        <th style="text-align: center">sample<sub>3</sub></th>
+        <th style="text-align: center">sample<sub>4</sub></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center">2</td>
+        <td style="text-align: center">2</td>
+        <td style="text-align: center">4</td>
+        <td style="text-align: center">3</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">0</td>
+        <td style="text-align: center">1</td>
+        <td style="text-align: center">1</td>
+        <td style="text-align: center">3</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">2</td>
+        <td style="text-align: center">3</td>
+        <td style="text-align: center">3</td>
+        <td style="text-align: center">2</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">4</td>
+        <td style="text-align: center">1</td>
+        <td style="text-align: center">0</td>
+        <td style="text-align: center">5</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">5</td>
+        <td style="text-align: center">4</td>
+        <td style="text-align: center">0</td>
+        <td style="text-align: center">1</td>
+      </tr>
+      <tr>
+        <td style="text-align: center">5</td>
+        <td style="text-align: center">4</td>
+        <td style="text-align: center">2</td>
+        <td style="text-align: center">2</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Next, we will train a decision tree on each of the boostrapped datasets. However, we won’t use every feature to train the tree. Instead, we will randomly choose two features and train the tree with those features only.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align: center">sample<sub>1</sub></th>
+        <th style="text-align: center">sample<sub>2</sub></th>
+        <th style="text-align: center">sample<sub>3</sub></th>
+        <th style="text-align: center">sample<sub>4</sub></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align: center">x<sub>0</sub>, x<sub>1</sub></td>
+        <td style="text-align: center">x<sub>2</sub>, x<sub>3</sub></td>
+        <td style="text-align: center">x<sub>2</sub>, x<sub>4</sub></td>
+        <td style="text-align: center">x<sub>1</sub>, x<sub>3</sub></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Decision Trees:</p>
+
+  <p><img src="../images/rfc3.png" alt="Alt text" /></p>
+
+  <p><img src="../images/rfc4.png" alt="Alt text" /></p>
+
+  <p>Now we have a random forest classifier. To use it, all we have to do is pass the new data point to every tree and label the most frequent outcome as the classification.</p>
+
+  <p>For example, passing the data point: (2.8, 6.2, 4.3, 5.3, 5.5) to each tree results in classifications of 1, 0, 1, 1. The prediction from our random forest is 1. This process of combining results from multiple models is called aggregation.</p>
+
+  <h2 id="conclusion">Conclusion</h2>
+
+  <p>A random forest classifier works by training a large number of decision trees, each using a randomly sampled subset of the training data (bootstrapping) and a randomly selected subset of the input features (random feature selection).</p>
+
+  <p>Bootstrapping ensures that the same data is not used for every tree, resulting in a model that is less sensitive to changes in the original training data. Random feature selection helps reduce the correlation between the trees. If every feature is used in training the trees, then there is a high chance that trees will have the same decision nodes, causing them to act similarly, increasing the variance.</p>
+
+  <p>The number of features that should be randomly selected is usually close to the square root of the total number of features.</p>
+
+  <h2 id="implementing-rfc-with-sklearn">Implementing RFC with sklearn</h2>
+
+  <p>Similar to DTC classifier, we will load breast cancer data and classify tumors.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_breast_cancer</span>
+<span class="kn">from</span> <span class="n">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="n">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="nf">load_breast_cancer</span><span class="p">()</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">target</span> 
+</code></pre></div>  </div>
+
+  <p>Next, we split the data. 80% for training the model, 20% for testing.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> 
+ <span class="nf">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Create the RFC, train it, and test the accuracy.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">clf4</span> <span class="o">=</span> <span class="nc">RandomForestClassifier</span><span class="p">()</span>
+<span class="n">clf4</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'RFC: </span><span class="si">{</span><span class="n">clf4</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Output:</p>
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">RFC</span><span class="p">:</span> <span class="mf">0.9649122807017544</span>
+</code></pre></div>  </div>
+
+  <p>The RFC classifies data points with 95%+ accuracy, an improvement over the DCT’s 90%.</p>
+
+</div>
+
+    </body>
+</html>

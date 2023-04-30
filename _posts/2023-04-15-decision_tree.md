@@ -78,14 +78,51 @@ $$
 Calculating the information gain for the two splits: 
 
 $$
-IG_left = 1 - (\frac{4}{20} \cdot 0 + \frac{16}{20} \cdot .95) = .24
+IG_{left} = 1 - (\frac{4}{20} \cdot 0 + \frac{16}{20} \cdot 0.95) = .24
 $$
 
 $$
-IG_right = 1 - (\frac{14}{20} \cdot .99 + \frac{6}{20} \cdot .92) = .031
+IG_{right} = 1 - (\frac{14}{20} \cdot 0.99 + \frac{6}{20} \cdot 0.92) = 0.031
 $$
 
 The left split gives more information gain, so we choose it over the right split.
 
 The model checks every split and chooses the one that maximizes the information gain. 
+
+## Implementing DTC with sklearn 
+
+Similar to SVC classifier, we will load breast cancer data and classify tumors. 
+
+```python
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+
+data = load_breast_cancer()
+
+x = data.data
+y = data.target 
+```
+
+Next, we split the data. 80% for training the model, 20% for testing.
+
+```python
+x_train, x_test, y_train, y_test = 
+ train_test_split(x, y, test_size=0.2)
+```
+
+Create the DTC, train it, and test the accuracy.
+
+```python
+clf3 = DecisionTreeClassifier()
+clf3.fit(x_train, y_train)
+print(f'DTC: {clf3.score(x_test, y_test)}')
+```
+
+Output:
+```python
+DTC: 0.8947368421052632
+```
+
+The model makes classifications with around 90% accuracy. To improve the accuracy of DTC's, we can implement something called a random forest classifier, which will be covered in the next article.
 

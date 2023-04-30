@@ -106,13 +106,46 @@
 
   <p>Calculating the information gain for the two splits:</p>
 
-\[IG_left = 1 - (\frac{4}{20} \cdot 0 + \frac{16}{20} \cdot .95) = .24\]
+\[IG_{left} = 1 - (\frac{4}{20} \cdot 0 + \frac{16}{20} \cdot 0.95) = .24\]
 
-\[IG_right = 1 - (\frac{14}{20} \cdot .99 + \frac{6}{20} \cdot .92) = .031\]
+\[IG_{right} = 1 - (\frac{14}{20} \cdot 0.99 + \frac{6}{20} \cdot 0.92) = 0.031\]
 
   <p>The left split gives more information gain, so we choose it over the right split.</p>
 
   <p>The model checks every split and chooses the one that maximizes the information gain.</p>
+
+  <h2 id="implementing-dtc-with-sklearn">Implementing DTC with sklearn</h2>
+
+  <p>Similar to SVC classifier, we will load breast cancer data and classify tumors.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_breast_cancer</span>
+<span class="kn">from</span> <span class="n">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="n">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="nf">load_breast_cancer</span><span class="p">()</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">.</span><span class="n">target</span> 
+</code></pre></div>  </div>
+
+  <p>Next, we split the data. 80% for training the model, 20% for testing.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> 
+ <span class="nf">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Create the DTC, train it, and test the accuracy.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">clf3</span> <span class="o">=</span> <span class="nc">DecisionTreeClassifier</span><span class="p">()</span>
+<span class="n">clf3</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'DTC: </span><span class="si">{</span><span class="n">clf3</span><span class="p">.</span><span class="nf">score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Output:</p>
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">DTC</span><span class="p">:</span> <span class="mf">0.8947368421052632</span>
+</code></pre></div>  </div>
+
+  <p>The model makes classifications with around 90% accuracy. To improve the accuracy of DTC’s, we can implement something called a random forest classifier, which will be covered in the next article.</p>
 
 </div>
 

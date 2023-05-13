@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>K-means Clustering</title>
+        <link rel="icon" type="image/png" href="img/favicon.png">
+        <link rel="stylesheet" href="/assets/navbarStyles.css">
+        <link rel="stylesheet" href="/assets/homeStyles.css">
+        <link rel="stylesheet" href="/assets/blogStyles.css">
+        <link rel="stylesheet" href="/assets/projectStyles.css">
+        <link rel="stylesheet" href="/assets/postStyles.css">
+        <link rel="stylesheet" href="/assets/contactStyles.css">
+        <link rel="stylesheet" href="/assets/syntax.css">
+
+        <script src="/navbarControl.js" defer></script>
+
+        <link rel="stylesheet" href="/projects/circularMotion/circularMotionStyles.css">
+        <link rel="stylesheet" href="/projects/gravitySimulator/gravitySimulatorStyles.css">
+        <link rel="stylesheet" href="/projects/collisionDetection/collisionDetectionStyles.css">
+        <link rel="stylesheet" href="/projects/lightTrails/lightTrailsStyles.css">
+        <link rel="stylesheet" href="/projects/sinWaves/sinWavesStyles.css">
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <div><a class="brand-title" href="/index.html">David Wang</a></div>
+            <a href="#" class="toggle-button">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </a>
+            <div class="navbar-links">
+                <ul>
+                    <li><a href="/blog.html">Blog</a></li>
+                    <li><a href="/projects.html">Projects</a></li>
+                    <li><a href="/contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+        <script type="text/javascript" async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ TeX: { extensions: ["color.js"] }});
+</script>
+
+<div class="container">
+
+  <div class="postTitle"> K-means Clustering </div>
+  <div class="desc"> The K-means clustering algorithm </div>
+  <div class="postDate"> Posted by David Wang on May 12, 2023 </div>
+
+  <h2 id="introduction">Introduction</h2>
+
+  <p>K-means clustering is an unsupervised machine learning algorithm that offers a powerful approach to discovering hidden structures in datasets. By grouping similar data points into clusters, K-means clustering allows us to gain valuable insights and make sense of complex information. In this blog post, we’ll delve into the inner workings of K-means clustering, exploring its fundamental principles and practical applications.</p>
+
+  <h2 id="clustering">Clustering</h2>
+
+  <p>The main difference between clustering and classifying is clustering uses unlabeled training data to find similarities and patterns while classifying uses labeled data to learn and make predictions/classifications.</p>
+
+  <p>The K-means clustering algorithm aims to identify “k” number of clusters within an unlabeled dataset. Here’s an example:</p>
+
+  <p><img src="../images/kmc1.png" alt="Alt text" /></p>
+
+  <p>In the above data, identifying k=3 clusters is obvious to us humans. However, the computer needs an algorithm: the k-means clustering algorithm. It is also important to note that in real life, data can have many features and the clusters may not be clear.</p>
+
+  <h2 id="k-means-clustering">K-means Clustering</h2>
+
+  <p>The k-means clustering algorithm works by identifying centroids, which are basically the centers of the clusters. The first step is to randomly initialize “k” number of centroids. In the example above, we’ll asign k=3.</p>
+
+  <p><img src="../images/kmc2.png" alt="Alt text" /></p>
+
+  <p>The algorithm then looks at each data point and calculates the distance to each centroid using a metric such as the euclidean distance and asigns it to the nearest cluster.</p>
+
+  <p><img src="../images/kmc3.png" alt="Alt text" /></p>
+
+  <p>After all data points have been assigned to clusters, compute the new centroids for each cluster by taking the mean of all data points assigned to that cluster. This moves the centroids to the center of their respective clusters.</p>
+
+  <p><img src="../images/kmc4.png" alt="Alt text" /></p>
+
+  <p>The algorithm now repeats the assignment of each data point using the new centroids, reassigning each data point to the nearest updated centroid.</p>
+
+  <p><img src="../images/kmc5.png" alt="Alt text" /></p>
+
+  <p>The assignment of points and updating of centroids is repeated until a stopping critera is met. The stoppoing criteria can be a fixed number of iterations or until the centroids no longer change significantly between iterations.</p>
+
+  <p>The final result:</p>
+
+  <p><img src="../images/kmc6.png" alt="Alt text" /></p>
+
+  <p>The k-means algorithm is sensitive to the initial placement of centroids, and different initializations may result in different clustering outcomes. To mitigate this issue, multiple runs with different initializations can be performed, and the clustering solution with the lowest within-cluster sum of squares can be selected as the final result.</p>
+
+  <h2 id="k-means-clustering-in-python">K-means Clustering in python</h2>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="n">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">scale</span>
+<span class="kn">from</span> <span class="n">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+</code></pre></div>  </div>
+
+  <p>Import the necessary modules. In this example, we will be creating a model to classify handwritten digits from the digits dataset.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">digits</span> <span class="o">=</span> <span class="nf">load_digits</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="nf">scale</span><span class="p">(</span><span class="n">digits</span><span class="p">.</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Load and scale the data. Feature scaling is a common preprocessing step that aims to standardize the range of features in a dataset. It ensures that each feature has a similar scale, preventing some features from dominating others due to their larger magnitude. This can be particularly important in machine learning algorithms that are sensitive to the scale of features, such as distance-based algorithms like K-means.</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span> <span class="o">=</span> <span class="nc">KMeans</span><span class="p">(</span><span class="n">n_clusters</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s">'random'</span><span class="p">,</span> <span class="n">n_init</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">model</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Create a model with 10 clusters (one for each digit from 0 to 9), initalizing the centroids randomly, and repeating the process 10 times with different centroid seeds. The final results will be based on the run with the lowest within-cluster error (sum of squared distances between point and centroid).</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="nf">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</code></pre></div>  </div>
+
+  <p>Train the model with the data. The model will form 10 clusters, one for each digit.</p>
+
+  <p>To classify a new unknown digit, simply pass in it’s feature vector:</p>
+
+  <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">model</span><span class="p">.</span><span class="nf">predict</span><span class="p">([...])</span>
+</code></pre></div>  </div>
+
+  <p>Finally, it doesn’t make much sense to test the model beacuse K-means clustering is an unsupervised machine learning algorithm, meaning that we don’t have predefined labels or target variables to evaluate the performance of the model. The best measure of how accurate the model is would be a metric like the within-cluster sum of squares.</p>
+
+  <h2 id="conclusion">Conclusion</h2>
+
+  <p>The k-means algorithm aims to minimize the within-cluster sum of squares by iteratively adjusting the centroids and reassigning data points to clusters. It converges when the centroids stabilize, and no further reassignments occur or when the maximum number of iterations is reached.</p>
+</div>
+
+    </body>
+</html>

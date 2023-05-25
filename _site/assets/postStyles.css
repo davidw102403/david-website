@@ -27,3 +27,8 @@
 pre {
     padding: 10px;
 }
+
+
+.mjx-block {
+    text-align: left !important; 
+}

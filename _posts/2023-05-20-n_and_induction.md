@@ -266,7 +266,40 @@ $$ \blacksquare $$
 
 <br>
 
+\\(\text{1.6 Prove } (11)^n -4^n \text{ is divisible by 7 when n is a positive integer } \\)
 
+Base case:
+For n = 1:
+
+$$
+\\
+\begin{align}
+(11)^1 -4^1 & = 7 \\
+\end{align}
+$$
+
+Inductive step:
+Suppose \\(P_{n}\\) is true for n=k:
+
+$$
+\\ P_{k}: (11)^k -4^k
+$$
+
+For \\(P_{k+1}\\):
+
+$$
+\\
+\begin{align}
+P_{k+1}: & (11)^{(k+1)} - 4^{(k+1)} \\
+= & (11)^k(11) - (4)^k(4) \\
+= & (11)^k(4 + 7) - (4)^k(4) \\
+= & 4(11)^k + 7(11)^k - 4(4)^k \\
+= & 4[(11)^k - (4)^k] + 7(11)^k \\
+\end{align}
+$$
+Both terms are divisible by 7. Thus, their sum is also divisible by 7. 
+
+$$ \blacksquare $$
 
 
 

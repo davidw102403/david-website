@@ -267,6 +267,35 @@ P_{k+1}: &amp; 1+\frac{1}{2} + \frac{1}{4} + ... + \frac{1}{2^k} + \frac{1}{2^{(
 
   <p><br /></p>
 
+  <p>\(\text{1.6 Prove } (11)^n -4^n \text{ is divisible by 7 when n is a positive integer } \)</p>
+
+  <p>Base case:
+For n = 1:</p>
+
+\[\\
+\begin{align}
+(11)^1 -4^1 &amp; = 7 \\
+\end{align}\]
+
+  <p>Inductive step:
+Suppose \(P_{n}\) is true for n=k:</p>
+
+\[\\ P_{k}: (11)^k -4^k\]
+
+  <p>For \(P_{k+1}\):</p>
+
+  <p>\(\\
+\begin{align}
+P_{k+1}: &amp; (11)^{(k+1)} - 4^{(k+1)} \\
+= &amp; (11)^k(11) - (4)^k(4) \\
+= &amp; (11)^k(4 + 7) - (4)^k(4) \\
+= &amp; 4(11)^k + 7(11)^k - 4(4)^k \\
+= &amp; 4[(11)^k - (4)^k] + 7(11)^k \\
+\end{align}\)
+Both terms are divisible by 7. Thus, their sum is also divisible by 7.</p>
+
+\[\blacksquare\]
+
 </div>
 
     </body>

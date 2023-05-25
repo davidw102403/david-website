@@ -139,6 +139,45 @@ $$ \blacksquare $$
 
 <br>
 
+$$\text{1.3 Prove } 1^3 + 2^3 + ... + n^3 = (1+2+...+n)^2 \text{ for all positive integers n.}$$
+
+Use the fact that \\(1+2+...+n=n(n+1)/2\\).
+\\(P_{n}: 1^3+2^3+...+n^3=(n(n+1)/2)^2\\) 
+
+Base case:
+For n = 1:
+
+$$
+\\
+\begin{align}
+1^3 & = (1(1+1)/2)^2 \\
+1 & = 1
+\end{align}
+$$
+
+Inductive step:
+Suppose \\(P_{n}\\) is true for n=k:
+
+$$
+\\ P_{k}: 1^3 + 2^3 + ... + k^3 = (k(k+1)/2)^2
+$$
+
+For \\(P_{k+1}\\):
+
+$$
+\\
+\begin{align}
+P_{k+1}: & 1^3 + 2^3 + ... + k^3 + (k+1)^3 \\
+= & (\frac{1}{2}k(k+1))^2 + (k+1)^3 \\
+= & \frac{1}{4}k^2(k+1)^2 + (k+1)^3 \\ 
+= & \frac{1}{4}(k+1)^2[k^2+4(k+1)] \\
+= & \frac{1}{4}(k+1)^2(k+2)^2 \\
+= & (\frac{(k+1)(k+2)}{2})^2 \\
+= & (\frac{(k+1)((k+1)+1)}{2})^2 \\
+\end{align}
+$$
+
+$$ \blacksquare $$
 
 
 

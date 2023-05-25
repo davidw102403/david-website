@@ -59,7 +59,7 @@ Mathematical induction stems from property N5 of natural numbers. If the stateme
 
 ### Exercises
 
-$$\text{1.1 Prove } 1^2 + 2^2 + ... + n^2 = \frac{1}{6}n(n+1)(2n+1) \text{ for all positive integers n.}$$
+\\(\text{1.1 Prove } 1^2 + 2^2 + ... + n^2 = \frac{1}{6}n(n+1)(2n+1) \text{ for all positive integers n.}\\)
 
 The nth proposition is: \\(P_{n}: 1^2 + 2^2 + ... + n^2 = \frac{1}{6}n(n+1)(2n+1)\\)
 
@@ -103,7 +103,7 @@ $$ \blacksquare $$
 
 
 
-$$\text{1.2 Prove } 3 + 11 + ... + (8n-5) = 4n^2 - n \text{ for all positive integers n.}$$
+\\(\text{1.2 Prove } 3 + 11 + ... + (8n-5) = 4n^2 - n \text{ for all positive integers n.}\\)
 
 Base case:
 For n = 1:
@@ -139,7 +139,7 @@ $$ \blacksquare $$
 
 <br>
 
-$$\text{1.3 Prove } 1^3 + 2^3 + ... + n^3 = (1+2+...+n)^2 \text{ for all positive integers n.}$$
+\\(\text{1.3 Prove } 1^3 + 2^3 + ... + n^3 = (1+2+...+n)^2 \text{ for all positive integers n.}\\)
 
 Use the fact that \\(1+2+...+n=n(n+1)/2\\).
 \\(P_{n}: 1^3+2^3+...+n^3=(n(n+1)/2)^2\\) 
@@ -301,6 +301,8 @@ Both terms are divisible by 7. Thus, their sum is also divisible by 7.
 
 $$ \blacksquare $$
 
+<br>
+
 \\(\text{1.7 Prove } 7^n - 6n -1 \text{ is divisible by 36 when n is a positive integer } \\)
 
 Base case:
@@ -335,8 +337,40 @@ Both terms are divisible by 36. Thus, their sum is also divisible by 36.
 
 $$ \blacksquare $$
 
+<br>
 
+\\(\text{1.8a Prove } n^2>n+1 \text{ for all integers } n \ge 2\\)
 
+Base case:
+For n = 2:
+
+$$
+\\
+\begin{align}
+2^2 & \ge 2+1 \\
+4 & \ge 3
+\end{align}
+$$
+
+Inductive step:
+Suppose \\(P_{n}\\) is true for n=k:
+
+$$
+\\ P_{k}: n^2>n+1 \text{ for all integers } n \ge 2
+$$
+
+For \\(P_{k+1}\\):
+
+$$
+\\
+\begin{align}
+P_{k+1}: & (k+1)^2  \\
+= & \\
+\end{align}
+$$
+Both terms are divisible by 36. Thus, their sum is also divisible by 36. 
+
+$$ \blacksquare $$
 
 
 

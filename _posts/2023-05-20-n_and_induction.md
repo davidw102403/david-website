@@ -230,6 +230,45 @@ $$ \blacksquare $$
 
 <br>
 
+\\(\text{1.5 Prove } 1+\frac{1}{2} + \frac{1}{4} + ... + \frac{1}{2^n} = 2-\frac{1}{2^n} \text{ for all positive integers n} \\)
+
+Base case:
+For n = 0:
+
+$$
+\\
+\begin{align}
+\frac{1}{2^0} & = 2-\frac{1}{2^0} \\
+1 & = 1
+\end{align}
+$$
+
+Inductive step:
+Suppose \\(P_{n}\\) is true for n=k:
+
+$$
+\\ P_{k}: 1+\frac{1}{2} + \frac{1}{4} + ... + \frac{1}{2^k} = 2-\frac{1}{2^k}
+$$
+
+For \\(P_{k+1}\\):
+
+$$
+\\
+\begin{align}
+P_{k+1}: & 1+\frac{1}{2} + \frac{1}{4} + ... + \frac{1}{2^k} + \frac{1}{2^{(k+1)}}\\
+= & 2-\frac{1}{2^k} + \frac{1}{2^{(k+1)}}\\
+= & 2-\frac{2}{2^{(k+1)}} + \frac{1}{2^{(k+1)}}\\
+= & 2-\frac{1}{2^{(k+1)}} 
+\end{align}
+$$
+
+$$ \blacksquare $$
+
+<br>
+
+
+
+
 
 
 

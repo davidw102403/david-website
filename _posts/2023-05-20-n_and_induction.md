@@ -179,6 +179,61 @@ $$
 
 $$ \blacksquare $$
 
+<br>
+
+\\(\text{1.4a Guess a formula for } 1+3+...+(2n-1)\\)
+
+Let \\(P_{n}: 1+3+...+(2n-1)\\):
+
+$$
+P_{1}: 1 \\
+P_{2}: 4 \\
+P_{3}: 9 \\
+P_{4}: 16 \\
+... \\
+P_{n}: n^2
+$$
+
+\\(\text{1.4b Prove your formula using mathematical induction} \\)
+
+Base case:
+For n = 1:
+
+$$
+\\
+\begin{align}
+2(1)-1 & = 1^2 \\
+1 & = 1
+\end{align}
+$$
+
+Inductive step:
+Suppose \\(P_{n}\\) is true for n=k:
+
+$$
+\\ P_{k}: 1+3+...+(2k-1) = k^2
+$$
+
+For \\(P_{k+1}\\):
+
+$$
+\\
+\begin{align}
+P_{k+1}: & 1+3+...+(2k-1)+(2(k+1)-1) \\
+= & k^2 + 2(k+1)-1 \\
+= & k^2+2k+1 \\
+= & (k+1)^2
+\end{align}
+$$
+
+$$ \blacksquare $$
+
+<br>
+
+
+
+
+
 
 
 

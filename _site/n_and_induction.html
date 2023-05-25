@@ -280,7 +280,7 @@ For n = 1:</p>
   <p>Inductive step:
 Suppose \(P_{n}\) is true for n=k:</p>
 
-\[\\ P_{k}: (11)^k -4^k\]
+\[\\ P_{k}: (11)^k -4^k \text{ is divisible by 7.}\]
 
   <p>For \(P_{k+1}\):</p>
 
@@ -293,6 +293,34 @@ P_{k+1}: &amp; (11)^{(k+1)} - 4^{(k+1)} \\
 = &amp; 4[(11)^k - (4)^k] + 7(11)^k \\
 \end{align}\)
 Both terms are divisible by 7. Thus, their sum is also divisible by 7.</p>
+
+\[\blacksquare\]
+
+  <p>\(\text{1.7 Prove } 7^n - 6n -1 \text{ is divisible by 36 when n is a positive integer } \)</p>
+
+  <p>Base case:
+For n = 1:</p>
+
+\[\\
+\begin{align}
+7^1 - 6(1) - 1 &amp; = 0 \\
+\end{align}\]
+
+  <p>Inductive step:
+Suppose \(P_{n}\) is true for n=k:</p>
+
+\[\\ P_{k}: 7^k - 6k -1 \text{ is divisible by 36.}\]
+
+  <p>For \(P_{k+1}\):</p>
+
+  <p>\(\\
+\begin{align}
+P_{k+1}: &amp; 7^{(k+1)} - 6(k+1) -1 \\
+= &amp; 7^k(7) - 6k -7 \\
+= &amp; (7^k(7) -42k + 42k - 7) -6k \\
+= &amp; 7(7^k -6k -1) + 36k 
+\end{align}\)
+Both terms are divisible by 36. Thus, their sum is also divisible by 36.</p>
 
 \[\blacksquare\]
 

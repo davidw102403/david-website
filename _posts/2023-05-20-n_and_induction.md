@@ -282,7 +282,7 @@ Inductive step:
 Suppose \\(P_{n}\\) is true for n=k:
 
 $$
-\\ P_{k}: (11)^k -4^k
+\\ P_{k}: (11)^k -4^k \text{ is divisible by 7.}
 $$
 
 For \\(P_{k+1}\\):
@@ -301,7 +301,39 @@ Both terms are divisible by 7. Thus, their sum is also divisible by 7.
 
 $$ \blacksquare $$
 
+\\(\text{1.7 Prove } 7^n - 6n -1 \text{ is divisible by 36 when n is a positive integer } \\)
 
+Base case:
+For n = 1:
+
+$$
+\\
+\begin{align}
+7^1 - 6(1) - 1 & = 0 \\
+\end{align}
+$$
+
+Inductive step:
+Suppose \\(P_{n}\\) is true for n=k:
+
+$$
+\\ P_{k}: 7^k - 6k -1 \text{ is divisible by 36.}
+$$
+
+For \\(P_{k+1}\\):
+
+$$
+\\
+\begin{align}
+P_{k+1}: & 7^{(k+1)} - 6(k+1) -1 \\
+= & 7^k(7) - 6k -7 \\
+= & (7^k(7) -42k + 42k - 7) -6k \\
+= & 7(7^k -6k -1) + 36k 
+\end{align}
+$$
+Both terms are divisible by 36. Thus, their sum is also divisible by 36. 
+
+$$ \blacksquare $$
 
 
 

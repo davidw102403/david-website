@@ -121,7 +121,65 @@ $$ \blacksquare $$
 
 <br>
 
-\\(\text{2.6 Show why } 4-7b \text{ is rational if } b \text{ is rational }\\)
+\\(\text{2.6 Show why } 4-7b^2 \text{ is rational if } b \text{ is rational }\\)
 
+If b is rational, then it must be of the form \\(\frac{m}{n}\\), where \\(m, n \in \mathbb{Z}, n \ne 0 \\).
+$$
+\\
+\begin{align}
+& 4-7b \\
+= & 4-7(\frac{m}{n})^2 \\
+= & \frac{4n^2-7m^2}{n^2}
+\end{align}
+$$
+
+$$
+4n^2-7m^2 \in \mathbb{Z}, n^2 \in Z, n^2 \ne 0 \\
+\text{Thus, } \frac{4n^2-7m^2}{n^2} \in \mathbb{Q}
+$$
+
+$$
+\blacksquare
+$$
+
+<br>
+
+\\(\text{2.7a Show that } \sqrt{4+2\sqrt{3}}-\sqrt{3} \text{ is rational }\\)
+
+$$
+\begin{align}
+& \sqrt{4+2\sqrt{3}}-\sqrt{3} \\
+& = \sqrt{1 + 3+2\sqrt{3}}-\sqrt{3} \\
+& = \sqrt{1^2 + (\sqrt{3})^2+2\sqrt{3}}-\sqrt{3} \\ 
+& = \sqrt{(1+\sqrt{3})^2}-\sqrt{3} \\
+& = 1+\sqrt{3}-\sqrt{3} \\
+& = 1 
+\end{align}
+$$
+
+
+<br>
+
+\\(\text{2.7b Show that } \sqrt{6+4\sqrt{2}}-\sqrt{2} \text{ is rational }\\)
+
+$$
+\begin{align}
+& \sqrt{6+4\sqrt{2}}-\sqrt{2} \\
+& = \sqrt{4 + 2+4\sqrt{2}}-\sqrt{2} \\
+& = \sqrt{2^2+(\sqrt{2})^2+4\sqrt{2}}-\sqrt{2} \\
+& = \sqrt{(2+\sqrt{2})^2} - \sqrt{2} \\ 
+& = 2 + \sqrt{2} - \sqrt{2} \\ 
+& = 2
+\end{align}
+$$
+
+<br>
+
+\\(\text{2.8 Find all rational solutions of the equation } x^8-4x^5+13x^3-7x+1=0\\)
+
+By the rational zeros theorem, the only possible rational roots are \\(\pm 1\\). Check \\(x=1\\):
+\\(1^8-4(1)^5+13(1)^3-7(1)+1=4\ne0\\). Check \\(x=-1\\): \\((-1)^8-4(-1)^5+13(-1)^3-7(-1)+1=0\\). 
+
+\\(x=-1\\) is the only rational solution.
 
 <br>
